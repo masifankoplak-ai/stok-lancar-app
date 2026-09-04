@@ -16,7 +16,7 @@ const BULAN = [
 
 export function formatTanggal(ts: number): string {
   const d = new Date(ts);
-  return `${d.getDate()} ${BULAN[d.getMonth()]} ${d.getFullYear()}`;
+  return `${d.getDate()} ${BULAN[d.getMonth()] ?? ""} ${d.getFullYear()}`;
 }
 
 export function formatTanggalPendek(ts: number): string {
@@ -31,7 +31,7 @@ export function formatTanggalWaktu(ts: number): string {
 }
 
 export function namaHari(ts: number): string {
-  return HARI[new Date(ts).getDay()];
+  return HARI[new Date(ts).getDay()] ?? "";
 }
 
 export function startOfDay(ts: number): number {

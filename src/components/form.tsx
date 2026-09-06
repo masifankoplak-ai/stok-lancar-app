@@ -1,4 +1,9 @@
-import type { ReactNode, InputHTMLAttributes, SelectHTMLAttributes } from "react";
+import type {
+  ReactNode,
+  InputHTMLAttributes,
+  SelectHTMLAttributes,
+  ButtonHTMLAttributes,
+} from "react";
 import { cn } from "@/lib/utils";
 
 export function Field({
@@ -45,7 +50,7 @@ export function Button({
   ...props
 }: {
   variant?: "primary" | "outline" | "ghost" | "danger";
-} & InputHTMLAttributes<HTMLButtonElement>) {
+} & ButtonHTMLAttributes<HTMLButtonElement>) {
   const tone =
     variant === "primary"
       ? "bg-primary text-primary-foreground"

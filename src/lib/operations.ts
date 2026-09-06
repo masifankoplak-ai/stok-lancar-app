@@ -3,6 +3,7 @@ import type {
   CartLine,
 } from "./calculations";
 import {
+  calculateRecipeCost,
   calculateCOGS,
   calculateSaleSubtotal,
   calculateSaleTotal,
@@ -309,4 +310,95 @@ export async function deleteProduct(productId: string): Promise<void> {
     }
     await db.products.delete(productId);
   });
+}
+
+export async function saveProduct(
+  data: Omit<Product, "createdAt" | "updatedAt"> & { id?: string },
+): Promise<string> {
+  const now = Date.now();
+  if (data.id) {
+    await db.products.update(data.id, { ...data, updatedAt: now });
+    return data.id;
+  }
+  const id = newId("prd");
+  await db.products.add({ ...data, id, createdAt: now, updatedAt: now });
+  await db.stockMovements.add(
+    movement({
+      itemType: "produk",
+      itemId: id,
+      namaItem: data.nama,
+      satuan: data.satuan,
+      qty: data.stok,
+      tipe: "Awal",
+      alasan: "Stok awal produk",
+    }),
+  );
+  return id;
+}
+
+export async function saveRawMaterial(
+  data: Omit<RawMaterial, "createdAt" | "updatedAt"> & { id?: string },
+): Promise<string> {
+  const now = Date.now();
+  if (data.id) {
+    await db.rawMaterials.update(data.id, { ...data, updatedAt: now });
+    return data.id;
+  }
+  const id = newId("bhn");
+  await db.rawMaterials.add({ ...data, id, createdAt: now, updatedAt: now });
+  await db.stockMovements.add(
+    movement({
+      itemType: "bahan",
+      itemId: id,
+      namaItem: data.nama,
+      satuan: data.satuan,
+      qty: data.stok,
+      tipe: "Awal",
+      alasan: "Stok awal bahan baku",
+    }),
+  );
+  return id;
+}
+
+export async function deleteRawMaterial(id: string): Promise<void> {
+  const dipakai = await db.recipeItems.where("rawMaterialId").equals(id).count();
+  if (dipakai > 0) {
+    throw new StockError("Bahan ini masih dipakai pada resep produk.");
+  }
+  await db.rawMaterials.delete(id);
+}
+
+/** Simpan resep produk dan perbarui HPP produk. */
+export async function saveRecipe(
+  productId: string,
+  items: { rawMaterialId: string; qty: number }[],
+): Promise<void> {
+  await db.transaction(
+    "rw",
+    [db.recipes, db.recipeItems, db.rawMaterials, db.products],
+    async () => {
+      const now = Date.now();
+      let recipe = await db.recipes.where("productId").equals(productId).first();
+      if (!recipe) {
+        recipe = { id: newId("rcp"), productId, createdAt: now, updatedAt: now };
+        await db.recipes.add(recipe);
+      } else {
+        await db.recipeItems.where("recipeId").equals(recipe.id).delete();
+        await db.recipes.update(recipe.id, { updatedAt: now });
+      }
+      const valid = items.filter((i) => i.rawMaterialId && i.qty > 0);
+      if (valid.length) {
+        await db.recipeItems.bulkAdd(
+          valid.map((i) => ({ id: newId("ri"), recipeId: recipe.id, ...i })),
+        );
+      }
+      const materials = await db.rawMaterials.toArray();
+      const hpp = calculateRecipeCost(valid, materials);
+      await db.products.update(productId, { hpp, updatedAt: now });
+    },
+  );
+}
+
+export async function deleteExpense(id: string): Promise<void> {
+  await db.expenses.delete(id);
 }

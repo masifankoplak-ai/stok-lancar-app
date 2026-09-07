@@ -6,6 +6,7 @@ import { Card, EmptyState, PageHeader, Section } from "@/components/ui-kit";
 import { db } from "@/lib/db";
 import { formatCurrency } from "@/lib/currency";
 import { formatTanggalWaktu } from "@/lib/date";
+import type { SaleItem } from "@/types";
 
 export const Route = createFileRoute("/riwayat")({
   head: () => ({
@@ -27,9 +28,9 @@ function Riwayat() {
   const [open, setOpen] = useState<string | null>(null);
   const sales = useLiveQuery(() => db.sales.orderBy("tanggal").reverse().toArray(), [], []);
   const items = useLiveQuery(
-    () => (open ? db.saleItems.where("saleId").equals(open).toArray() : Promise.resolve([])),
+    async () => (open ? await db.saleItems.where("saleId").equals(open).toArray() : []),
     [open],
-    [],
+    [] as SaleItem[],
   );
 
   return (

@@ -313,7 +313,7 @@ export async function deleteProduct(productId: string): Promise<void> {
 }
 
 export async function saveProduct(
-  data: Omit<Product, "createdAt" | "updatedAt"> & { id?: string },
+  data: Omit<Product, "id" | "createdAt" | "updatedAt"> & { id?: string },
 ): Promise<string> {
   const now = Date.now();
   if (data.id) {
@@ -337,7 +337,7 @@ export async function saveProduct(
 }
 
 export async function saveRawMaterial(
-  data: Omit<RawMaterial, "createdAt" | "updatedAt"> & { id?: string },
+  data: Omit<RawMaterial, "id" | "createdAt" | "updatedAt"> & { id?: string },
 ): Promise<string> {
   const now = Date.now();
   if (data.id) {

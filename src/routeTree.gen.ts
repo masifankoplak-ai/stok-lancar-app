@@ -13,6 +13,9 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as LainnyaRouteImport } from './routes/lainnya'
 import { Route as LaporanRouteImport } from './routes/laporan'
 import { Route as MutasiRouteImport } from './routes/mutasi'
+import { Route as PembelianRouteImport } from './routes/pembelian'
+import { Route as PengaturanRouteImport } from './routes/pengaturan'
+import { Route as PengeluaranRouteImport } from './routes/pengeluaran'
 import { Route as PenjualanRouteImport } from './routes/penjualan'
 import { Route as RiwayatRouteImport } from './routes/riwayat'
 import { Route as StokRouteImport } from './routes/stok'
@@ -39,6 +42,21 @@ const LaporanRoute = LaporanRouteImport.update({
 const MutasiRoute = MutasiRouteImport.update({
   id: '/mutasi',
   path: '/mutasi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PembelianRoute = PembelianRouteImport.update({
+  id: '/pembelian',
+  path: '/pembelian',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PengaturanRoute = PengaturanRouteImport.update({
+  id: '/pengaturan',
+  path: '/pengaturan',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PengeluaranRoute = PengeluaranRouteImport.update({
+  id: '/pengeluaran',
+  path: '/pengeluaran',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PenjualanRoute = PenjualanRouteImport.update({
@@ -82,6 +100,9 @@ export interface FileRoutesByFullPath {
   '/lainnya': typeof LainnyaRoute
   '/laporan': typeof LaporanRoute
   '/mutasi': typeof MutasiRoute
+  '/pembelian': typeof PembelianRoute
+  '/pengaturan': typeof PengaturanRoute
+  '/pengeluaran': typeof PengeluaranRoute
   '/penjualan': typeof PenjualanRoute
   '/riwayat': typeof RiwayatRoute
   '/stok': typeof StokRoute
@@ -95,6 +116,9 @@ export interface FileRoutesByTo {
   '/lainnya': typeof LainnyaRoute
   '/laporan': typeof LaporanRoute
   '/mutasi': typeof MutasiRoute
+  '/pembelian': typeof PembelianRoute
+  '/pengaturan': typeof PengaturanRoute
+  '/pengeluaran': typeof PengeluaranRoute
   '/penjualan': typeof PenjualanRoute
   '/riwayat': typeof RiwayatRoute
   '/stok': typeof StokRoute
@@ -109,6 +133,9 @@ export interface FileRoutesById {
   '/lainnya': typeof LainnyaRoute
   '/laporan': typeof LaporanRoute
   '/mutasi': typeof MutasiRoute
+  '/pembelian': typeof PembelianRoute
+  '/pengaturan': typeof PengaturanRoute
+  '/pengeluaran': typeof PengeluaranRoute
   '/penjualan': typeof PenjualanRoute
   '/riwayat': typeof RiwayatRoute
   '/stok': typeof StokRoute
@@ -124,6 +151,9 @@ export interface FileRouteTypes {
     | '/lainnya'
     | '/laporan'
     | '/mutasi'
+    | '/pembelian'
+    | '/pengaturan'
+    | '/pengeluaran'
     | '/penjualan'
     | '/riwayat'
     | '/stok'
@@ -137,6 +167,9 @@ export interface FileRouteTypes {
     | '/lainnya'
     | '/laporan'
     | '/mutasi'
+    | '/pembelian'
+    | '/pengaturan'
+    | '/pengeluaran'
     | '/penjualan'
     | '/riwayat'
     | '/stok'
@@ -150,6 +183,9 @@ export interface FileRouteTypes {
     | '/lainnya'
     | '/laporan'
     | '/mutasi'
+    | '/pembelian'
+    | '/pengaturan'
+    | '/pengeluaran'
     | '/penjualan'
     | '/riwayat'
     | '/stok'
@@ -164,6 +200,9 @@ export interface RootRouteChildren {
   LainnyaRoute: typeof LainnyaRoute
   LaporanRoute: typeof LaporanRoute
   MutasiRoute: typeof MutasiRoute
+  PembelianRoute: typeof PembelianRoute
+  PengaturanRoute: typeof PengaturanRoute
+  PengeluaranRoute: typeof PengeluaranRoute
   PenjualanRoute: typeof PenjualanRoute
   RiwayatRoute: typeof RiwayatRoute
   StokRoute: typeof StokRoute
@@ -201,6 +240,27 @@ declare module '@tanstack/react-router' {
       path: '/mutasi'
       fullPath: '/mutasi'
       preLoaderRoute: typeof MutasiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pembelian': {
+      id: '/pembelian'
+      path: '/pembelian'
+      fullPath: '/pembelian'
+      preLoaderRoute: typeof PembelianRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pengaturan': {
+      id: '/pengaturan'
+      path: '/pengaturan'
+      fullPath: '/pengaturan'
+      preLoaderRoute: typeof PengaturanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pengeluaran': {
+      id: '/pengeluaran'
+      path: '/pengeluaran'
+      fullPath: '/pengeluaran'
+      preLoaderRoute: typeof PengeluaranRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/penjualan': {
@@ -260,6 +320,9 @@ const rootRouteChildren: RootRouteChildren = {
   LainnyaRoute: LainnyaRoute,
   LaporanRoute: LaporanRoute,
   MutasiRoute: MutasiRoute,
+  PembelianRoute: PembelianRoute,
+  PengaturanRoute: PengaturanRoute,
+  PengeluaranRoute: PengeluaranRoute,
   PenjualanRoute: PenjualanRoute,
   RiwayatRoute: RiwayatRoute,
   StokRoute: StokRoute,

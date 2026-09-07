@@ -16,6 +16,10 @@ import { Route as MutasiRouteImport } from './routes/mutasi'
 import { Route as PenjualanRouteImport } from './routes/penjualan'
 import { Route as RiwayatRouteImport } from './routes/riwayat'
 import { Route as StokRouteImport } from './routes/stok'
+import { Route as BahanIndexRouteImport } from './routes/bahan.index'
+import { Route as BahanIdRouteImport } from './routes/bahan.$id'
+import { Route as ProdukIndexRouteImport } from './routes/produk.index'
+import { Route as ProdukIdRouteImport } from './routes/produk.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,6 +56,26 @@ const StokRoute = StokRouteImport.update({
   path: '/stok',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BahanIndexRoute = BahanIndexRouteImport.update({
+  id: '/bahan/',
+  path: '/bahan/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BahanIdRoute = BahanIdRouteImport.update({
+  id: '/bahan/$id',
+  path: '/bahan/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProdukIndexRoute = ProdukIndexRouteImport.update({
+  id: '/produk/',
+  path: '/produk/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProdukIdRoute = ProdukIdRouteImport.update({
+  id: '/produk/$id',
+  path: '/produk/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +85,10 @@ export interface FileRoutesByFullPath {
   '/penjualan': typeof PenjualanRoute
   '/riwayat': typeof RiwayatRoute
   '/stok': typeof StokRoute
+  '/bahan/$id': typeof BahanIdRoute
+  '/produk/$id': typeof ProdukIdRoute
+  '/bahan/': typeof BahanIndexRoute
+  '/produk/': typeof ProdukIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +98,10 @@ export interface FileRoutesByTo {
   '/penjualan': typeof PenjualanRoute
   '/riwayat': typeof RiwayatRoute
   '/stok': typeof StokRoute
+  '/bahan/$id': typeof BahanIdRoute
+  '/produk/$id': typeof ProdukIdRoute
+  '/bahan': typeof BahanIndexRoute
+  '/produk': typeof ProdukIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +112,10 @@ export interface FileRoutesById {
   '/penjualan': typeof PenjualanRoute
   '/riwayat': typeof RiwayatRoute
   '/stok': typeof StokRoute
+  '/bahan/$id': typeof BahanIdRoute
+  '/produk/$id': typeof ProdukIdRoute
+  '/bahan/': typeof BahanIndexRoute
+  '/produk/': typeof ProdukIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +127,10 @@ export interface FileRouteTypes {
     | '/penjualan'
     | '/riwayat'
     | '/stok'
+    | '/bahan/$id'
+    | '/produk/$id'
+    | '/bahan/'
+    | '/produk/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +140,10 @@ export interface FileRouteTypes {
     | '/penjualan'
     | '/riwayat'
     | '/stok'
+    | '/bahan/$id'
+    | '/produk/$id'
+    | '/bahan'
+    | '/produk'
   id:
     | '__root__'
     | '/'
@@ -109,6 +153,10 @@ export interface FileRouteTypes {
     | '/penjualan'
     | '/riwayat'
     | '/stok'
+    | '/bahan/$id'
+    | '/produk/$id'
+    | '/bahan/'
+    | '/produk/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,6 +167,10 @@ export interface RootRouteChildren {
   PenjualanRoute: typeof PenjualanRoute
   RiwayatRoute: typeof RiwayatRoute
   StokRoute: typeof StokRoute
+  BahanIdRoute: typeof BahanIdRoute
+  ProdukIdRoute: typeof ProdukIdRoute
+  BahanIndexRoute: typeof BahanIndexRoute
+  ProdukIndexRoute: typeof ProdukIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -172,6 +224,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StokRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/bahan/': {
+      id: '/bahan/'
+      path: '/bahan'
+      fullPath: '/bahan/'
+      preLoaderRoute: typeof BahanIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bahan/$id': {
+      id: '/bahan/$id'
+      path: '/bahan/$id'
+      fullPath: '/bahan/$id'
+      preLoaderRoute: typeof BahanIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/produk/': {
+      id: '/produk/'
+      path: '/produk'
+      fullPath: '/produk/'
+      preLoaderRoute: typeof ProdukIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/produk/$id': {
+      id: '/produk/$id'
+      path: '/produk/$id'
+      fullPath: '/produk/$id'
+      preLoaderRoute: typeof ProdukIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -183,6 +263,10 @@ const rootRouteChildren: RootRouteChildren = {
   PenjualanRoute: PenjualanRoute,
   RiwayatRoute: RiwayatRoute,
   StokRoute: StokRoute,
+  BahanIdRoute: BahanIdRoute,
+  ProdukIdRoute: ProdukIdRoute,
+  BahanIndexRoute: BahanIndexRoute,
+  ProdukIndexRoute: ProdukIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

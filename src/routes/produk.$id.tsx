@@ -41,7 +41,7 @@ function ProdukForm() {
   const navigate = useNavigate();
 
   const produk = useLiveQuery(
-    () => (baru ? Promise.resolve(undefined) : db.products.get(id)),
+    async () => (baru ? undefined : await db.products.get(id)),
     [id],
     undefined,
   );

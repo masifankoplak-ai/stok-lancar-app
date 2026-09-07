@@ -32,7 +32,7 @@ function BahanForm() {
   const baru = id === "baru";
   const navigate = useNavigate();
   const bahan = useLiveQuery(
-    () => (baru ? Promise.resolve(undefined) : db.rawMaterials.get(id)),
+    async () => (baru ? undefined : await db.rawMaterials.get(id)),
     [id],
     undefined,
   );

@@ -118,7 +118,7 @@ function RootShell({ children }: { children: ReactNode }) {
   // Pada build aplikasi Android (Capacitor) router dipasang ke <div id="root">,
   // sehingga shell <html>/<body> tidak boleh dirender: browser akan memindahkan
   // node-nya dan membuat React kehilangan jejak DOM (halaman membeku saat mengetik).
-  if (import.meta.env.VITE_APP_TARGET === "android") {
+  if (import.meta.env["VITE_APP_TARGET"] === "android") {
     return <>{children}</>;
   }
 

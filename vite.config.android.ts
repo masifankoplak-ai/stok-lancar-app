@@ -7,6 +7,9 @@ import { tanstackRouter } from "@tanstack/router-plugin/vite";
 
 export default defineConfig({
   base: "./",
+  define: {
+    "import.meta.env.VITE_APP_TARGET": JSON.stringify("android"),
+  },
   plugins: [
     tanstackRouter({ target: "react", autoCodeSplitting: true, generatedRouteTree: "src/routeTree.gen.ts" }),
     react(),
